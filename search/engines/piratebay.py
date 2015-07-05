@@ -30,9 +30,6 @@
 
 from html.parser import HTMLParser
 from http.client import HTTPSConnection as https
-#qBt
-from novaprinter import prettyPrinter
-from helpers import download_file
 
 class piratebay(object):
     """ Search engine class """
@@ -40,15 +37,15 @@ class piratebay(object):
     name = 'The Pirate Bay'
     supported_categories = {'all': '0', 'music': '100', 'movies': '200', 'games': '400', 'software': '300'}
 
-    def download_torrent(self, info):
-        """ Downloader """
-        print(download_file(info))
+    def __init__(self):
+        self.list_results = list()
 
     class MyHtmlParseWithBlackJack(HTMLParser):
         """ Parser class """
-        def __init__(self, list_searches, url):
+        def __init__(self, list_searches, url, list_results):
             HTMLParser.__init__(self)
             self.list_searches = list_searches
+            self.list_results = list_results
             self.url = url
             self.current_item = None
             self.save_item = None
@@ -118,7 +115,7 @@ class piratebay(object):
             """ Parser's end tag handler """
             if self.result_tbody:
                 if tag == "tr":
-                    prettyPrinter(self.current_item)
+                    self.list_results.append(self.current_item)
                     self.current_item = None
                 elif tag == "font":
                     self.save_item = None
@@ -183,4 +180,10 @@ class piratebay(object):
             parser.close()
 
         connection.close()
+        self.list_results.sort(key=lambda dic: int(dic["seeds"]))
         return
+
+    def get_results(self):
+        """ generator for search results """
+        for result in self.result_list:
+            yield result
