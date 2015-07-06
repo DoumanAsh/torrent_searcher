@@ -26,9 +26,8 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from novaprinter import prettyPrinter
-from helpers import retrieve_url, download_file
 import json
+from http.client import HTTPConnection as https
 
 class kickasstorrents(object):
     url = 'https://kat.cr'
@@ -40,8 +39,10 @@ class kickasstorrents(object):
 
     def search(self, what, cat='all'):
         i = 1
+        connection = https('kat.cr')
         while True and i < 11:
-            json_data = retrieve_url(self.url+'/json.php?q=%s&page=%d'%(what, i))
+            json_data = connection.request("GET", '/json.php?q=%s&page=%d'%(what, i))
+            json_data = json_data.getresponse().read().decode('utf-8')
             try:
                 json_dict = json.loads(json_data)
             except:

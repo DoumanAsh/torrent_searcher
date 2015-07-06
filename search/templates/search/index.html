@@ -1,3 +1,18 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-Dummy torrent search
+
+<form action="/search/query/" method="POST">
+{% csrf_token %}
+<table>
+<tr>
+	<th>KickAss</th>
+	<th><input type="text" name="kickasstorrents" value={{query}}/></th>
+	<th><input type="submit" value="OK"></th>
+</tr>
+<tr>
+	<th>BTDigg</th>
+	<th><input type="text" name="btdigg" value={{query}}/></th>
+	<th><input type="submit" value="OK"></th>
+</tr>
+</table>
+</form>

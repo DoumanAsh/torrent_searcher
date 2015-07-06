@@ -1,0 +1,11 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+{% for res in results %}
+<table>
+<tr>
+	<th>{{ res.name }}</th>
+	<th><a href="{{ res.url }}">Torrent link</a></th>
+</tr>
+</table>
+{% endfor %}
