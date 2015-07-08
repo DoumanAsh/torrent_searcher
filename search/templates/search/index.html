@@ -1,25 +1,27 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
 
-<form action="/search/query/kickasstorrents" method="POST">
-{% csrf_token %}
 <table>
 <tr>
-	<th>KickAss</th>
-	<th><input type="text" name="kickasstorrents" value={{query}}/></th>
-	<th><input type="submit" value="OK"></th>
+	<th>Engine</th>
+	<th>Search query</th>
 </tr>
-</table>
-</form>
 
-<form action="/search/query/btdigg" method="POST">
+<form action="{% url 'Search' %}" method="POST">
 {% csrf_token %}
-<table>
 <tr>
-
-	<th>BTDigg</th>
-	<th><input type="text" name="btdigg" value={{query}}/></th>
-	<th><input type="submit" value="OK"></th>
+	<td>KickAss</td>
+	<td><input type="text" name="kickasstorrents" value={{query}}/></td>
+	<td><input type="submit" value="OK"></td>
 </tr>
-</table>
 </form>
+
+<form action="{% url 'Search' %}" method="POST">
+{% csrf_token %}
+<tr>
+	<td>BTDigg</td>
+	<td><input type="text" name="btdigg" value={{query}}/></td>
+	<td><input type="submit" value="OK"></td>
+</tr>
+</form>
+</table>

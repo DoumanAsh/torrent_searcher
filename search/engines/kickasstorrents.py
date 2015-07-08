@@ -42,8 +42,8 @@ class kickasstorrents(object):
         connection = https('kat.cr')
         while True and i < 11:
             json_data = connection.request("GET", '/json.php?q=%s&page=%d'%(what, i))
-            json_data = json_data.getresponse().read().decode('utf-8')
             try:
+                json_data = json_data.getresponse().read().decode('utf-8')
                 json_dict = json.loads(json_data)
             except:
                 i += 1
@@ -66,7 +66,7 @@ class kickasstorrents(object):
                 except:
                     pass
             i += 1
-        self.result_list.sort(key=lambda dic: int(dic["seeds"]))
+        self.result_list.sort(key=lambda dic: int(dic["seeds"]), reverse=True)
 
     def get_results(self):
         """ generator for search results """

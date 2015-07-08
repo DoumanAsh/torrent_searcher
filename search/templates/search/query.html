@@ -1,11 +1,21 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
 
-{% for res in results %}
-<table>
+<table id="results">
 <tr>
-	<th>{{ res.name }}</th>
-	<th><a href="{{ res.url }}">Torrent link</a></th>
+	<th>Name</th>
+	<th>Seeds</th>
+	<th>Leeches</th>
+	<th>Size</th>
+	<th>Link</th>
 </tr>
-</table>
+{% for res in results %}
+<tr>
+	<td>{{ res.name }}</td>
+	<td>{{ res.seeds }}</td>
+	<td>{{ res.leech }}</td>
+	<td>{{ res.size }}</td>
+	<td><a href="{{ res.link }}">{{ res.link }}</a></td>
+</tr>
 {% endfor %}
+</table>

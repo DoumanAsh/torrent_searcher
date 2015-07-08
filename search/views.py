@@ -25,14 +25,11 @@ def exec_search(request):
         #get low-level module
         engine_module = getattr(engine_module, engi)
         engine = getattr(engine_module, engi)()
-        try:
-            engine.search(query)
-        except:
-            pass
+        engine.search(query)
         
         #response
         context = Context({"results" : engine.get_results()} )
-        render(request, "search/query.html", context=context)
+        return render(request, "search/query.html", context=context)
     #default is 404 as you should not access it without data
     else:
         raise Http404

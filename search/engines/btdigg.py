@@ -64,7 +64,7 @@ class btdigg(object):
                 break
             i += 1
 
-        self.result_list.sort(key=lambda dic: int(dic["seeds"]))
+        self.result_list.sort(key=lambda dic: int(dic["seeds"]), reverse=True)
 
 
     def get_results(self):
