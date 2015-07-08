@@ -7,26 +7,32 @@ def index(request):
 
 def exec_search(request):
     if request.method == "POST":
-        for engi, query in request.POST.items():
-            if not query or query == "\\":
-                continue
-            #import engines.[engine]
-            try:
-                engine_module = __import__(".".join(("search.engines", engi)))
-            except ImportError:
-                continue
-            engine_module = getattr(engine_module, "engines")
-            #get low-level module
-            engine_module = getattr(engine_module, engi)
-            engine = getattr(engine_module, engi)()
-            try:
-                engine.search(query)
-            except:
-                continue
+        if "kickasstorrents" in request.POST:
+            engi = "kickasstorrents"
+        elif "btdigg" in request.POST:
+            engi = "btdigg"
+        else:
+            raise Http404
+
+        query = request.POST[engi]
+        #import engines.[engine]
+        try:
+            engine_module = __import__(".".join(("search.engines", engi)))
+        except ImportError:
+            #wrong engine? Impossible
+            raise Http404
+        engine_module = getattr(engine_module, "engines")
+        #get low-level module
+        engine_module = getattr(engine_module, engi)
+        engine = getattr(engine_module, engi)()
+        try:
+            engine.search(query)
+        except:
+            pass
         
-            #response
-            context = Context({"results" : engine.get_results()} )
-            render(request, "search/query.html", context=context)
+        #response
+        context = Context({"results" : engine.get_results()} )
+        render(request, "search/query.html", context=context)
     #default is 404 as you should not access it without data
     else:
         raise Http404
