@@ -1,3 +1,5 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-<a href="/search/"> Torrent Searcher </a>
+<title>Index</title>
+<h2><a href="{% url 'search_index' %}"> Torrent Searcher </a></h2>
+<h2><a href="{% url 'about' %}"> About </a></h2>

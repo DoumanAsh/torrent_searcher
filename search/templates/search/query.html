@@ -1,6 +1,7 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-
+<title>Search results</title>
+{% if athlete_list %}
 <table id="results">
 <tr>
 	<th>Name</th>
@@ -19,3 +20,9 @@
 </tr>
 {% endfor %}
 </table>
+
+{% else %}
+<div class="page-wrap">
+<h2>Unable to find anything</h2>
+</div>
+{% endif %}

@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.http import Http404
 from django.template import Context
 
-def index(request):
+def search_index(request):
     return render(request, "search/index.html")
 
 def exec_search(request):

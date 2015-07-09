@@ -27,7 +27,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import json
-from http.client import HTTPConnection as https
+from urllib.request import urlopen
 
 class kickasstorrents(object):
     url = 'https://kat.cr'
@@ -39,11 +39,9 @@ class kickasstorrents(object):
 
     def search(self, what, cat='all'):
         i = 1
-        connection = https('kat.cr')
         while True and i < 11:
-            json_data = connection.request("GET", '/json.php?q=%s&page=%d'%(what, i))
+            json_data = urlopen('%s/json.php?q=%s&page=%d' % (self.url, what, i)).read().decode("utf-8")
             try:
-                json_data = json_data.getresponse().read().decode('utf-8')
                 json_dict = json.loads(json_data)
             except:
                 i += 1
